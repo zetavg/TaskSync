@@ -16,8 +16,6 @@ module.exports = {
 
     taskId: {
       type: 'string',
-      primaryKey: true,
-      required: true,
       unique: true
     },
 
@@ -41,10 +39,6 @@ module.exports = {
       type: 'text'
     },
 
-    lastUpdatedAt: {
-      type: 'datetime'
-    },
-
     starred: {
       type: 'boolean',
       defaultsTo: false
@@ -53,6 +47,30 @@ module.exports = {
     assignedToMe: {
       type: 'boolean',
       defaultsTo: false
-    }
+    },
+
+    remoteTaskId: {
+      type: 'string',
+      defaultsTo: '_null_',
+      required: true
+    },
+
+    lastUpdatedAt: {
+      type: 'datetime',
+      defaultsTo: (new Date(0)),
+      required: true
+    },
+
+    remoteUpdatedAt: {
+      type: 'datetime',
+      defaultsTo: (new Date(0)),
+      required: true
+    },
+
+    wlUpdatedAt: {
+      type: 'datetime',
+      defaultsTo: (new Date(0)),
+      required: true
+    },
   }
 };
