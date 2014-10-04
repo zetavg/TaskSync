@@ -10,20 +10,45 @@
  * http://sailsjs.org/#/documentation/concepts/Logging
  */
 
-module.exports.log = {
+ /***************************************************************************
+ *                                                                          *
+ * Valid `level` configs: i.e. the minimum log level to capture with        *
+ * sails.log.*()                                                            *
+ *                                                                          *
+ * The order of precedence for log levels from lowest to highest is:        *
+ * silly, verbose, info, debug, warn, error                                 *
+ *                                                                          *
+ * You may also set the level to "silent" to suppress all logs.             *
+ *                                                                          *
+ ***************************************************************************/
 
-  /***************************************************************************
-  *                                                                          *
-  * Valid `level` configs: i.e. the minimum log level to capture with        *
-  * sails.log.*()                                                            *
-  *                                                                          *
-  * The order of precedence for log levels from lowest to highest is:        *
-  * silly, verbose, info, debug, warn, error                                 *
-  *                                                                          *
-  * You may also set the level to "silent" to suppress all logs.             *
-  *                                                                          *
-  ***************************************************************************/
+require('dotenv').load();
 
-  // level: 'info'
+if (process.env.LOG_FILE_PATH) {
+  var winston = require('winston');
 
-};
+  var fileLogger = new winston.Logger({
+    transports: [
+      new(winston.transports.File)({
+        level: (process.env.LOG_LEVEL || 'warn'),
+        filename: process.env.LOG_FILE_PATH
+      }),
+      new(winston.transports.Console)({
+        level: (process.env.LOG_LEVEL || 'warn'),
+        prettyPrint: true,
+        colorize: true,
+        silent: false,
+        timestamp: false
+      }),
+    ],
+  });
+
+  module.exports.log = {
+    colors: false,
+    custom: fileLogger
+  };
+} else {
+  module.exports.log = {
+    level: (process.env.LOG_LEVEL || 'warn')
+  };
+}

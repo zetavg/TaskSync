@@ -11,6 +11,12 @@
 
 module.exports.bootstrap = function(cb) {
 
+  sails.dotenv = require('dotenv');
+  sails.dotenv.load();
+  sails.logExtInfo = process.env.LOG_EXT_INFO
+
+  sails.wl = require('../lib/Wunderlist2Api.js'), username = process.env.WL_USERNAME, password = process.env.WL_PASSWORD, loginData = '{ "email": "'+username+'", "password": "'+password+'" }'
+
   // It's very important to trigger this callback method when you are finished
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
   cb();
