@@ -18,7 +18,11 @@ module.exports = {
 
     title: {
       type: 'string'
+    },
+
+    tasks: {
+      collection: 'task',
+      via: 'listId'
     }
   }
 };
-
