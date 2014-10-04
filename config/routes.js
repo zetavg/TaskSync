@@ -34,7 +34,7 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
-  }
+  },
 
   /***************************************************************************
   *                                                                          *
@@ -45,5 +45,15 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
+
+  '/index' : {
+    controller: 'main',
+    action: 'index'
+  },
+
+  '/sync' : {
+    controller: 'sync',
+    action: 'sync'
+  },
 
 };
