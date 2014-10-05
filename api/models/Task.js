@@ -39,6 +39,10 @@ module.exports = {
       type: 'text'
     },
 
+    remoteUrl: {
+      type: 'text'
+    },
+
     starred: {
       type: 'boolean',
       defaultsTo: false
@@ -72,5 +76,10 @@ module.exports = {
       defaultsTo: (new Date(0)),
       required: true
     },
+  },
+
+  afterUpdate: function (task, cb) {
+    if (sails.logExtInfo) sails.log.info("task updated!" + JSON.stringify(task));
+    cb();
   }
 };
