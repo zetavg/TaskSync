@@ -17,6 +17,8 @@ module.exports.bootstrap = function(cb) {
 
   sails.Trello = require('node-trello');
 
+  sails.icalendar = require('icalendar');
+
 
   sails.wl = require('../lib/Wunderlist2Api.js'), username = process.env.WL_USERNAME, password = process.env.WL_PASSWORD, loginData = '{ "email": "'+username+'", "password": "'+password+'" }'
 

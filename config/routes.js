@@ -46,14 +46,15 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/index' : {
-    controller: 'main',
-    action: 'index'
-  },
+  '/index': 'main.index',
 
-  '/sync' : {
-    controller: 'sync',
-    action: 'sync'
-  },
+  '/sync': 'sync.sync',
+  '/sync.json': 'sync.sync',
+
+  '/ics': 'ics.all',
+  '/ics.ics': 'ics.all',
+
+  '/ics/:listId': 'ics.list',
+  '/ics/:listId.ics': 'ics.list',
 
 };
