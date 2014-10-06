@@ -10,7 +10,7 @@ module.exports = {
   attributes: {
 
     listId: {
-      model: 'list',
+      type: 'string',
       required: true
     },
 

@@ -42,6 +42,7 @@
     "request": "^2.44.0",
     "sails": "~0.10.5",
     "sails-disk": "~0.10.0",
+    "sails-postgresql": "^0.10.9",
     "winston": "^0.8.0"
   },
   "scripts": {

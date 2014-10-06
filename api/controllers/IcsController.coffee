@@ -10,12 +10,12 @@ module.exports =
       ical = new sails.icalendar.iCalendar()
       tasks.forEach (task, index) ->
         taskEvent = ical.addComponent('VEVENT')
-        taskEvent.setSummary task.title
-        taskEvent.setDescription if task.remoteUrl then "#{task.remoteUrl}\n#{task.note}" else task.note
+        taskEvent.setSummary (if task.title then task.title else '')
+        taskEvent.setDescription (if task.remoteUrl then "#{task.remoteUrl}\n#{task.note}" else (if task.note then task.note else ''))
         dueDate = new Date(task.dueDate)
         dueDate.date_only = true
         taskEvent.setDate dueDate, dueDate
-        taskEvent.addProperty 'URL', task.remoteUrl
+        taskEvent.addProperty 'URL', (if task.remoteUrl then task.remoteUrl else '')
       res.send(ical.toString())
 
   all: (req, res) ->
@@ -23,11 +23,11 @@ module.exports =
       ical = new sails.icalendar.iCalendar()
       tasks.forEach (task, index) ->
         taskEvent = ical.addComponent('VEVENT')
-        taskEvent.setSummary task.title
-        taskEvent.setDescription if task.remoteUrl then "#{task.remoteUrl}\n#{task.note}" else task.note
+        taskEvent.setSummary (if task.title then task.title else '')
+        taskEvent.setDescription (if task.remoteUrl then "#{task.remoteUrl}\n#{task.note}" else (if task.note then task.note else ''))
         dueDate = new Date(task.dueDate)
         dueDate.date_only = true
         taskEvent.setDate dueDate, dueDate
-        taskEvent.addProperty 'URL', task.remoteUrl
+        taskEvent.addProperty 'URL', (if task.remoteUrl then task.remoteUrl else '')
       res.send(ical.toString())
 

@@ -25,8 +25,7 @@ module.exports = {
     },
 
     apiSecret: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
 
     syncLists: {

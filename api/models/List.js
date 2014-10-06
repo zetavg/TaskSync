@@ -11,7 +11,7 @@ module.exports = {
 
     listId: {
       type: 'string',
-      primaryKey: true,
+      // primaryKey: true,
       required: true,
       unique: true
     },
