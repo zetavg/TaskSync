@@ -1,0 +1,16 @@
+extends ../layout
+
+block body
+  .panel.panel-default
+    .panel-body
+      .page-header.app-header
+        a.f-right.btn.btn-default.has-tooltip(href='/logout' data-toggle='tooltip' data-placement='top' title='Sign out')
+          = current_user_name
+          | &nbsp;
+          span.glyphicon.glyphicon-log-out
+        h1
+          = sails.pjson.name
+          | &nbsp;
+          small.hidden-xs= sails.pjson.version
+
+      p Hello!

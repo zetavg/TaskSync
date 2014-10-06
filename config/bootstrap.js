@@ -14,11 +14,13 @@ module.exports.bootstrap = function(cb) {
   sails.dotenv = require('dotenv');
   sails.dotenv.load();
   sails.logExtInfo = process.env.LOG_EXT_INFO
+  sails.appKey = process.env.APP_KEY
+
+  sails.pjson = require('../package.json');
 
   sails.Trello = require('node-trello');
 
   sails.icalendar = require('icalendar');
-
 
   sails.wl = require('../lib/Wunderlist2Api.js'), username = process.env.WL_USERNAME, password = process.env.WL_PASSWORD, loginData = '{ "email": "'+username+'", "password": "'+password+'" }'
 

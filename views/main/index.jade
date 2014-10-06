@@ -1,1 +1,15 @@
-p Hello World
+extends ../layout
+
+block body
+  form.form-signin(role='form' method='post' action='/login')
+    h1.h2.form-signin-heading
+      = sails.pjson.name
+      | &nbsp;
+      small.hidden-xs= sails.pjson.version
+    p Please sign in
+    input.form-control.username(placeholder='Username', name='username', required='required', autofocus='autofocus')
+    input.form-control.password(type='password', name='password', placeholder='Password', required='required')
+    //- label.checkbox
+      //- input(type='checkbox', value='remember-me')
+      //- | Remember me
+    button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in

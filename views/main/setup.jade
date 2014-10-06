@@ -1,0 +1,39 @@
+extends ../layout
+
+block body
+  .panel.panel-default
+    .panel-heading
+      h1.panel-title
+        = sails.pjson.name
+        | &nbsp;Setup&nbsp;
+        small= sails.pjson.version
+    .panel-body
+      h2.h5 Required Environment Variables:
+      ul
+        li
+          code WL_USERNAME
+          | &nbsp; your username of Wunderlist
+        li
+          code WL_PASSWORD
+          | &nbsp; your password of Wunderlist
+        li
+          code USERNAME
+          | &nbsp; set an username to login
+        li
+          code ENCRYPTED_PASSWORD
+          | &nbsp; set an password to login, hashed with MD5
+        li
+          code APP_KEY
+          | &nbsp; set an key to call APIs such as '/sync' or '/ics'
+
+      h2.h5 Optional Environment Variables:
+      ul
+        li
+          code LOG_FILE_PATH
+          | &nbsp; store logs in a file
+        li
+          code LOG_LEVEL
+          | &nbsp; defaults to 'warn', set to 'info' to see more information
+        li
+          code LOG_EXT_INFO
+          | &nbsp; log extra details

@@ -26,7 +26,12 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  '*': true,
+  'list': 'sessionAuth',
+  'task': 'sessionAuth',
+  'service': 'sessionAuth',
+  'ics': 'keyAuth',
+  'sync': 'keyAuth',
 
   /***************************************************************************
   *                                                                          *
