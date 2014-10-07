@@ -30,6 +30,7 @@ module.exports.policies = {
   'list': 'sessionAuth',
   'task': 'sessionAuth',
   'service': 'sessionAuth',
+  'data': 'sessionAuth',
   'ics': 'keyAuth',
   'sync': 'keyAuth',
 

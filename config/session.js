@@ -21,7 +21,7 @@ module.exports.session = {
   * of your users, forcing them to log in again.                             *
   *                                                                          *
   ***************************************************************************/
-  secret: (Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2)),
+  secret: ((process.env.SESSION_SECRET) || (Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2))),
 
 
   /***************************************************************************

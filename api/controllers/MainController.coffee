@@ -9,7 +9,9 @@ module.exports =
     if !process.env.WL_USERNAME || !process.env.WL_PASSWORD || !process.env.USERNAME || !process.env.ENCRYPTED_PASSWORD || !process.env.APP_KEY
       return res.redirect '/setup'
     else if !!req.session.authenticated
-      return res.view('main/controlPanel', {current_user_name: req.session.current_user_name})
+      return res.view 'main/controlPanel',
+        current_user_name: req.session.current_user_name
+        urlKey: process.env.APP_KEY
     else
       return res.view()
 

@@ -22,8 +22,11 @@ module.exports =
                 else
                   syncLog.status = 'error'
                   sails.log.warn "sync done with error(s) in #{syncLog.time/1000} seconds: #{JSON.stringify(syncLog)}"
-                sails.log.info 'Sync done.'
-                res.send(syncLog)
+                Data.findOrCreate({key: 'lastSyncAt'}, {key: 'lastSyncAt'}).exec (error, lastSyncAt) ->
+                  lastSyncAt.value = (new Date()).toString()
+                  lastSyncAt.save (error, data) ->
+                    sails.log.info 'Sync done.'
+                    res.send(syncLog)
       else
         sails.log.error error
         syncLog.status = 'error'
@@ -462,11 +465,9 @@ module.exports =
                   syncType = null
                   syncLog.remoteSyncs[list.listId].error = error
                   syncLog.errors.push "bad sync options for #{list.listId} (#{list.title}): #{list.syncOptions}"
-                  sCallback null, true
                   return
 
                 if syncType  # 開始同步
-
                   syncActions.push (sCallback) ->
                     sails.log.info "syncing with trello: #{list.listId} (#{list.title}, opts: #{list.syncOptions})"
                     logNewTasksFromLocal = []
@@ -655,7 +656,6 @@ module.exports =
                                         deletedTasksFromRemote: logDeletedTasksFromRemote
                                       sails.log.info "done sync with Trello: #{list.listId} (#{list.title}, opts: #{list.syncOptions}, nl: #{logNewTasksFromLocal.length}, ul: #{logUpdatedTasksFromLocal.length}, ur: #{logUpdatedTasksFromRemote.length}, dl: #{logDeletedTasksFromLocal.length}, dr: #{logDeletedTasksFromRemote.length})"
                                       sCallback null, true
-
 
               else
                 sails.log.warn "Unknown service type '#{list.syncService.type}' for #{list.listId} (#{list.title})"

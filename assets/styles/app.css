@@ -12,6 +12,14 @@ body {
   float: right;
 }
 
+.f-left {
+  float: left;
+}
+
+p.error {
+  color: red;
+}
+
 .panel-body > .app-header:first-child {
   margin-top: 0;
 }
@@ -62,4 +70,73 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.sync-control .status {
+  margin: 7px 12px;
+}
+
+.sync-control {
+  overflow: auto;
+}
+
+.service-control {
+  margin-top: 20px;
+}
+
+.service-control table .btn {
+  margin-left: 2px;
+}
+
+.list-control {
+  margin-top: 20px;
+}
+
+.list-group-item .syncs-with {
+  display: inline-block;
+  float: right;
+}
+
+.list-control .list-group-item:hover, .list-control .list-group-item:focus {
+  color: #555;
+  text-decoration: none;
+  background-color: #f5f5f5;
+}
+
+.list-control .list-group-item .ics {
+  margin-left: 8px;
+}
+
+.list-control .syncs-with .glyphicon {
+  margin-right: 4px;
+}
+
+.list-group-item .btn, .list-group-item .syncs-with {
+  margin-top: -1px;
+}
+
+.list-group-item .syncs-with .glyphicon {
+  position: relative;
+  top: 3px;
+}
+
+.rotate {
+  -webkit-animation-name: rotate;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-name: rotate;
+  -moz-animation-duration: 2s;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+}
+
+@-webkit-keyframes rotate {
+  from { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); }
+}
+
+@-moz-keyframes rotate {
+  from { -moz-transform: rotate(0deg); }
+  to { -moz-transform: rotate(360deg); }
 }

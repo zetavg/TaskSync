@@ -13,4 +13,11 @@ block body
           | &nbsp;
           small.hidden-xs= sails.pjson.version
 
-      p Hello!
+      #app-control-panel
+
+block scripts
+
+  script.
+    window.urlKey = "#{urlKey}";
+
+  script(src="/js/controlPanel.js")
