@@ -6,28 +6,30 @@
 module.exports =
 
   list: (req, res) ->
-    Task.find({ dueDate: { '!': null }, listId: req.param('listId') }).exec (error, tasks) ->
+    Task.find({ listId: req.param('listId'), dueDate: { '!': null } }).exec (error, tasks) ->
       ical = new sails.icalendar.iCalendar()
-      tasks.forEach (task, index) ->
-        taskEvent = ical.addComponent('VEVENT')
-        taskEvent.setSummary (if task.title then task.title else '')
-        taskEvent.setDescription (if task.remoteUrl then "#{task.remoteUrl}\n#{task.note}" else (if task.note then task.note else ''))
-        dueDate = new Date(task.dueDate)
-        dueDate.date_only = true
-        taskEvent.setDate dueDate, dueDate
-        taskEvent.addProperty 'URL', (if task.remoteUrl then task.remoteUrl else '')
+      if tasks
+        tasks.forEach (task, index) ->
+          taskEvent = ical.addComponent('VEVENT')
+          taskEvent.setSummary (if task.title then task.title else '')
+          taskEvent.setDescription (if task.remoteUrl then "#{task.remoteUrl}\n#{task.note}" else (if task.note then task.note else ''))
+          dueDate = new Date(task.dueDate)
+          dueDate.date_only = true
+          taskEvent.setDate dueDate, dueDate
+          taskEvent.addProperty 'URL', (if task.remoteUrl then task.remoteUrl else '')
       res.send(ical.toString())
 
   all: (req, res) ->
     Task.find({ dueDate: { '!': null } }).exec (error, tasks) ->
       ical = new sails.icalendar.iCalendar()
-      tasks.forEach (task, index) ->
-        taskEvent = ical.addComponent('VEVENT')
-        taskEvent.setSummary (if task.title then task.title else '')
-        taskEvent.setDescription (if task.remoteUrl then "#{task.remoteUrl}\n#{task.note}" else (if task.note then task.note else ''))
-        dueDate = new Date(task.dueDate)
-        dueDate.date_only = true
-        taskEvent.setDate dueDate, dueDate
-        taskEvent.addProperty 'URL', (if task.remoteUrl then task.remoteUrl else '')
+      if tasks
+        tasks.forEach (task, index) ->
+          taskEvent = ical.addComponent('VEVENT')
+          taskEvent.setSummary (if task.title then task.title else '')
+          taskEvent.setDescription (if task.remoteUrl then "#{task.remoteUrl}\n#{task.note}" else (if task.note then task.note else ''))
+          dueDate = new Date(task.dueDate)
+          dueDate.date_only = true
+          taskEvent.setDate dueDate, dueDate
+          taskEvent.addProperty 'URL', (if task.remoteUrl then task.remoteUrl else '')
       res.send(ical.toString())
 
