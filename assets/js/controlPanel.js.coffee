@@ -1,26 +1,3 @@
-TextInput = React.createClass
-  getDefaultProps: ->
-    initialValue: ''
-    id: ''
-    className: ''
-    onChange: (value) ->
-      console.log value
-  getInitialState: ->
-    value: @props.initialValue
-  handleChange: (e) ->
-    @value(e.target.value)
-  value: (value = @state.value) ->
-    if value != @state.value
-      @setState value: value
-      @props.onChange(value)
-    value
-  render: ->
-    value = @state.value
-    id = @props.id
-    className = @props.className
-    input {type: "text", id: id, className: "form-control #{className}", value: value, onChange: @handleChange}
-
-
 Settings = React.createClass
   render: ->
     div {dangerouslySetInnerHTML: __html: '<iframe src="http://ghbtns.com/github-btn.html?user=Neson&amp;repo=TaskSync&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="104px" height="20px"></iframe>
@@ -66,7 +43,7 @@ SyncControl = React.createClass
       @setState syncState: 'syncing'
       console.log 'syncing'
       $.ajax(
-        url: "/sync?key=#{window.urlKey}"
+        url: "/sync?key=#{window.urlKey}&force=true"
         type: 'POST'
       ).done (data) =>
         if data.status != 'done'

@@ -8,7 +8,8 @@ module.exports =
   sync: (req, res) ->
     syncLog = { remoteSyncs: {}, startTime: new Date(), errors: [] }
     sails.log.info 'Start syncing ...'
-    sails.wl.login loginData, (error, login) ->
+
+    sync = -> sails.wl.login loginData, (error, login) ->
       if login
         getData ->
           serviceSync ->
@@ -672,3 +673,25 @@ module.exports =
             return
           else
             cb(req, res)
+
+
+    if !!process.env.MINIMUM_SYNC_RATE && !req.param('force')
+      Data.findOrCreate({key: 'lastSyncCalled'}, {key: 'lastSyncCalled'}).exec (error, lastSyncCalled) ->
+        if !!lastSyncCalled
+          lastSync = new Date(lastSyncCalled.value)
+          interval = (new Date() - lastSync)/1000
+          if interval < parseInt(process.env.MINIMUM_SYNC_RATE)
+            sails.log.info "Skipping sync (sync interval: #{interval} less then #{process.env.MINIMUM_SYNC_RATE})"
+            syncLog.info = 'skipping'
+            syncLog.skipping = true
+            syncLog.status = 'done'
+            res.send(syncLog)
+          else
+            lastSyncCalled.value = (new Date()).toString()
+            lastSyncCalled.save (error, data) ->
+              sync()
+        else
+          lastSyncCalled.value = (new Date()).toString()
+          lastSyncCalled.save (error, data) ->
+            sync()
+    else sync()
