@@ -119,6 +119,7 @@ module.exports =
                 callback error, null if error
                 # if (remote updateds after local update && remote updateds after local updates remote) or new record
                 if ((new Date(record.lastUpdatedAt)) < (new Date(wlTask.updated_at)) && (new Date(wlTask.updated_at)) > (new Date(record.wlUpdatedAt))) || Date.parse(record.lastUpdatedAt) == 0
+                  record.listId = wlTask.list_id
                   record.lastUpdatedAt = (new Date(wlTask.updated_at))
                   record.title = wlTask.title
                   record.completedAt = if wlTask.completed_at then new Date(wlTask.completed_at) else null
