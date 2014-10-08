@@ -307,6 +307,7 @@ module.exports =
                                   record.note = aTask.notes
                                   record.deletedAt = null
                                   record.starred = aTask.hearted
+                                  record.remoteUrl = "https://app.asana.com/0/#{aTask.workspace?.id}/#{aTask.id}"
                                   # record.assignedToMe =
                                   record.save (error, data) ->
                                     if error
@@ -324,7 +325,7 @@ module.exports =
                                       title: (if record.title then record.title else '(blank)')
                                       completed: (if record.completedAt then true else false)
                                       due_on: record.dueDate
-                                      notes: record.note
+                                      notes: (if record.note then record.note else '')
                                       hearted: record.starred
                                     , (error, updated) ->
                                       if error
@@ -398,6 +399,8 @@ module.exports =
                                         else
                                           newTask.remoteUpdatedAt = updated.data.modified_at if updated.data?.modified_at
                                           newTask.remoteTaskId = updated.data.id
+                                          newTask.remoteUrl = "https://app.asana.com/0/#{updated.data.workspace?.id}/#{updated.data.id}"
+                                          newTask.lastUpdatedAt = new Date()
                                           newTask.save (error, data) ->
                                             if error
                                               sails.log.error error
