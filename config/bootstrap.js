@@ -13,8 +13,8 @@ module.exports.bootstrap = function(cb) {
 
   sails.dotenv = require('dotenv');
   sails.dotenv.load();
-  sails.logExtInfo = process.env.LOG_EXT_INFO
-  sails.appKey = process.env.APP_KEY
+  sails.logExtInfo = process.env.LOG_EXT_INFO;
+  sails.appKey = process.env.APP_KEY;
 
   sails.pjson = require('../package.json');
 

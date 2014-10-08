@@ -71,7 +71,7 @@ $ heroku addons:add heroku-postgresql
 $ git push heroku
 ```
 
-然後到 Heroku 設定環境變數 (參考 `.env`)。
+然後到 Heroku 設定環境變數 (參考 `/setup` 和 `.env`)。
 
 
 ## TODO

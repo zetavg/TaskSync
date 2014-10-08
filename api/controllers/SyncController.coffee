@@ -31,7 +31,7 @@ module.exports =
         sails.log.error error
         syncLog.status = 'error'
         syncLog.error = error
-        res.status(500).send(syncLog)
+        res.send(syncLog)
 
 
     # Get data from Wunderlist
@@ -46,7 +46,7 @@ module.exports =
         if error
           sails.log.error error
           syncLog.status = 'error'
-          res.status(500).send(syncLog)
+          res.send(syncLog)
           return
         else
           cb(req, res)
@@ -63,7 +63,7 @@ module.exports =
           sails.log.error error
           syncLog.status = 'error'
           syncLog.error = error
-          res.status(500).send(syncLog)
+          res.send(syncLog)
         else
 
           # Prepare lists data
@@ -102,7 +102,7 @@ module.exports =
         if error
           sails.log.error error
           syncLog.status = 'error'
-          res.status(500).send(syncLog)
+          res.send(syncLog)
           return
         else
 
@@ -151,7 +151,7 @@ module.exports =
         if error
           sails.log.error error
           syncLog.status = 'error'
-          res.status(500).send(syncLog)
+          res.send(syncLog)
           return
         else
           wlTasks = wlTasks.reduce ((o, v, k) ->
@@ -165,7 +165,7 @@ module.exports =
             if error
               sails.log.error error
               syncLog.status = 'error'
-              res.status(500).send(syncLog)
+              res.send(syncLog)
               return
             else
               # Prepare action for each task
@@ -233,7 +233,7 @@ module.exports =
                 if error
                   sails.log.error error
                   syncLog.status = 'error'
-                  res.status(500).send(syncLog)
+                  res.send(syncLog)
                   return
                 else
                   cb(req, res)
@@ -266,9 +266,11 @@ module.exports =
                   asana.getTasks list.syncOptions, (error, data) ->
                     if error
                       sails.log.error error
+                      syncLog.errors.push "can't connect to Asana, bad sync options? #{list.listId} (#{list.title}): #{list.syncOptions}"
                       sCallback error, null
                     else
                       aTasks = data['data']
+                      # syncLog.errors.push "no data form Asana, bad sync options? #{list.listId} (#{list.title}): #{list.syncOptions}" if !aTasks
                       # Prepare task sync
                       aTaskActions = []
                       aTaskIds = []
@@ -279,6 +281,7 @@ module.exports =
                           asana.getTask aTask.id, null, (error, data) ->
                             if error
                               sails.log.error error
+                              syncLog.errors.push "can't get task from Asana: #{list.listId} (#{list.title}): #{list.syncOptions}"
                               ataCallback error, null
                             else
                               aTask = data['data']
@@ -345,7 +348,7 @@ module.exports =
                         if error
                           sails.log.error error
                           syncLog.status = 'error'
-                          res.status(500).send(syncLog)
+                          res.send(syncLog)
                           return
                         else
                           # mark task that has a remote id but doesn't appear in list as deleted
@@ -358,7 +361,7 @@ module.exports =
                               if error
                                 sails.log.error error
                                 syncLog.status = 'error'
-                                res.status(500).send(syncLog)
+                                res.send(syncLog)
                                 return
                               else if newTasks.length > 0
                                 # prepare creation
@@ -366,7 +369,7 @@ module.exports =
                                   if error || !me.data
                                     sails.log.error error
                                     syncLog.status = 'error'
-                                    res.status(500).send(syncLog)
+                                    res.send(syncLog)
                                     return
                                   wsMatch = list.syncOptions.match(/workspace=[^&]+/)
                                   wsId = if wsMatch then wsMatch[0].replace(/workspace=/, "") else null
@@ -408,7 +411,7 @@ module.exports =
                                     if error
                                       sails.log.error error
                                       syncLog.status = 'error'
-                                      res.status(500).send(syncLog)
+                                      res.send(syncLog)
                                       return
                                     else
                                       syncLog.remoteSyncs[list.listId].statistics =
@@ -570,7 +573,7 @@ module.exports =
                               if error
                                 sails.log.error error
                                 syncLog.status = 'error'
-                                res.status(500).send(syncLog)
+                                res.send(syncLog)
                                 return
                               else
                                 # mark task that has a remote id but doesn't appear in list as deleted
@@ -583,7 +586,7 @@ module.exports =
                                     if error
                                       sails.log.error error
                                       syncLog.status = 'error'
-                                      res.status(500).send(syncLog)
+                                      res.send(syncLog)
                                       return
                                     else if newTasks.length > 0
                                       tCreateCardActions = []
@@ -622,7 +625,7 @@ module.exports =
                                         if error
                                           sails.log.error error
                                           syncLog.status = 'error'
-                                          res.status(500).send(syncLog)
+                                          res.send(syncLog)
                                           return
                                         else
                                           syncLog.remoteSyncs[list.listId].statistics =
@@ -665,7 +668,7 @@ module.exports =
           if error
             sails.log.error error
             syncLog.status = 'error'
-            res.status(500).send(syncLog)
+            res.send(syncLog)
             return
           else
             cb(req, res)

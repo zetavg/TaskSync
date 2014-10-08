@@ -65,7 +65,10 @@ SyncControl = React.createClass
     if @state.syncState != 'syncing'
       @setState syncState: 'syncing'
       console.log 'syncing'
-      $.get "/sync?key=#{window.urlKey}", (data) =>
+      $.ajax(
+        url: "/sync?key=#{window.urlKey}"
+        type: 'POST'
+      ).done (data) =>
         if data.status != 'done'
           @setState syncState: 'error'
           @setState syncErrorMessage: (if data.errors then data.errors else []).join(', ')
@@ -74,6 +77,7 @@ SyncControl = React.createClass
         else
           @setState syncState: 'done'
           window.lastAjaxData = data
+          console.log data
         @props.updateParent()
 
   render: ->
@@ -185,6 +189,7 @@ Service = React.createClass
         type: 'DELETE'
       ).done (data) =>
         console.log data
+        location.reload() if data.error
         @props.onUpdate()
 
   render: ->
@@ -260,6 +265,7 @@ AsanaForm = React.createClass
       , (data) =>
         console.log data
         @props.onUpdate()
+        location.reload() if data.error
         @setState
           name: ''
           apiKey: ''
@@ -272,6 +278,7 @@ AsanaForm = React.createClass
           apiKey: @state.apiKey
       ).done (data) =>
         console.log data
+        location.reload() if data.error
         @props.onUpdate()
 
   render: ->
@@ -319,6 +326,7 @@ TrelloForm = React.createClass
         apiSecret: @state.apiSecret
       , (data) =>
         console.log data
+        location.reload() if data.error
         @props.onUpdate()
         @setState
           name: ''
@@ -334,6 +342,7 @@ TrelloForm = React.createClass
           apiSecret: @state.apiSecret
       ).done (data) =>
         console.log data
+        location.reload() if data.error
         @props.onUpdate()
 
   render: ->
@@ -403,6 +412,7 @@ List = React.createClass
         syncOptions: @state.syncOptions
     ).done (data) =>
       console.log data
+      location.reload() if data.error
       @props.onUpdate()
 
   render: ->
